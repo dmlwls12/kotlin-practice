@@ -1,0 +1,24 @@
+<!-- resources/templates/todo.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>ToDo App</title>
+    </head>
+    <body>
+        <h1>ToDo List</h1>
+
+        <form action="/add" method="post">
+            <input type="text" name="content" placeholder="할 일을 입력하세요" required>
+            <button type="submit">추가</button>
+        </form>
+
+        <ul>
+            <li th:each="todo : ${todos}">
+                <span th:text="${todo.content}"></span>
+                <form th:action="@{/delete/{id}(id=${todo.id})}" method="post" style="display:inline">
+                    <button type="submit">삭제</button>
+                </form>
+            </li>
+        </ul>
+    </body>
+</html>

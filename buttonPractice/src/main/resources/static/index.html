@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>버튼으로 사용자 등록</title>
+    </head>
+    <body>
+        <h2>사용자 등록</h2>
+        <input type="text" id="username" placeholder="이름 입력"/>
+        <button onclick="saveUser()">저장</button>
+
+        <h3>등록된 사용자 목록</h3>
+        <ul id="userList"L></ul>
+
+        <script>
+            function saveUser(){
+                const name = document.getElementById("username").value;
+
+                fetch('/users',{
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({name: name})
+                }).then(() => loadUsers());
+            }
+
+            function loadusers(){
+                fetch('users')
+                    .then(res => res.json())
+                    .then(data => {
+                        const list = document.getElementById("userList");
+                        list.innerHTML = '';
+                        data.forEach(user => {
+                            const li = document.createElement("li");
+                            li.textContent = `{user.id}: ${user.name}`;
+                            list.appendChild(li);
+                        });
+                    });
+            }
+
+            window.onload = loadUsers;
+        </script>
+    </body>
+</html>
