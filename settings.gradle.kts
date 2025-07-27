@@ -1,2 +1,2 @@
 rootProject.name = "kotlin-practice"
-include("buttonPractice", "todoList")
+include("buttonPractice", "todoList", "board")
